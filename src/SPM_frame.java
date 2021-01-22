@@ -97,6 +97,8 @@ public class SPM_frame extends JFrame {
 	private JLabel p2_octeur;
 	private JLabel p2_noveur;
 	private JLabel p2_deceur;
+	
+	private JComboBox<String> selectProduct;
 
 	static String first = new String("Raport pe ani");
 	static String second = new String("Raport pe luni");
@@ -432,7 +434,7 @@ public class SPM_frame extends JFrame {
 
 		//Construct a JComboBox named "selectProduct", to select an item and view information about this item
 
-		JComboBox<String> selectProduct = new JComboBox<>(Products.products());
+		selectProduct = new JComboBox<>(Products.products());
 		selectProduct.setBounds(20,10,400,25);
 		selectProduct.setPreferredSize(new Dimension(400, 25));
 		selectProduct.setBackground(Color.WHITE);
@@ -780,7 +782,7 @@ public class SPM_frame extends JFrame {
 
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout((LayoutManager) new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-		bottomPanel.setBackground(Color.BLUE);
+		bottomPanel.setBackground(new Color(224, 224, 224));
 		bottomPanel.setLayout(null);
 
 		Font rowTitleFont = new Font("Verdana", Font.BOLD, 14);
@@ -1378,119 +1380,7 @@ public class SPM_frame extends JFrame {
 				p2_octeur.setVisible(false);
 				p2_noveur.setVisible(false);
 				p2_deceur.setVisible(false);
-
-				ArrayList<String> ani = new ArrayList<String>();	//Construct an array list of string containing years
-				ani.add("2016");
-				ani.add("2017");
-				ani.add("2018");
-				ani.add("2019");
-				ani.add("2020");
-				ani.add("2021");
-
-				// Calculus for quantities (BUC) by years
-
-				ArrayList<Integer> buc_ani = null;
-
-				try {
-					buc_ani = SumYear.sumQuantityYear(p1l1.getText(), ani);
-				} 
-				catch (FileNotFoundException e2) {
-					e2.printStackTrace();
-				}
-				
-				if (buc_ani.get(0) == 0) {
-					p2_2016buc.setText("-");
-				}
-				else {
-					buc_ani.get(0).toString();
-					p2_2016buc.setText(String.format("%,d", buc_ani.get(0)) + " BUC");
-				}
-				if (buc_ani.get(1) == 0) {
-					p2_2017buc.setText("-");
-				}
-				else {
-					buc_ani.get(1).toString();
-					p2_2017buc.setText(String.format("%,d", buc_ani.get(1)) + " BUC");
-				}
-				if (buc_ani.get(2) == 0) {
-					p2_2018buc.setText("-");
-				}
-				else {
-					buc_ani.get(2).toString();
-					p2_2018buc.setText(String.format("%,d", buc_ani.get(2)) + " BUC");
-				}
-				if (buc_ani.get(3) == 0) {
-					p2_2019buc.setText("-");
-				}
-				else {
-					buc_ani.get(3).toString();
-					p2_2019buc.setText(String.format("%,d", buc_ani.get(3)) + " BUC");				
-				}
-				if (buc_ani.get(4) == 0) {
-					p2_2020buc.setText("-");
-				}
-				else {
-					buc_ani.get(4).toString();
-					p2_2020buc.setText(String.format("%,d", buc_ani.get(4)) + " BUC");
-				}
-				if (buc_ani.get(5) == 0) {
-					p2_2021buc.setText("-");
-				}
-				else {
-					buc_ani.get(5).toString();
-					p2_2021buc.setText(String.format("%,d", buc_ani.get(5)) + " BUC");
-				}
-
-				// Calculus for values (EUR) by years
-
-				ArrayList<Double> eur_ani = null;
-
-				try {
-					eur_ani = SumYear.sumValueYear(p1l1.getText(), ani);
-				} 
-				catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				if (eur_ani.get(0) == 0) {
-					p2_2016eur.setText("-");
-				}
-				else {
-					p2_2016eur.setText(df2.format(eur_ani.get(0)) + " EUR");
-				}
-				if (eur_ani.get(1) == 0) {
-					p2_2017eur.setText("-");
-				}
-				else {
-					p2_2017eur.setText(df2.format(eur_ani.get(1)) + " EUR");
-				}
-				if (eur_ani.get(2) == 0) {
-					p2_2018eur.setText("-");
-				}
-				else {
-					p2_2018eur.setText(df2.format(eur_ani.get(2)) + " EUR");
-				}
-				if (eur_ani.get(3) == 0) {
-					p2_2019eur.setText("-");
-				}
-				else {
-					p2_2019eur.setText(df2.format(eur_ani.get(3)) + " EUR");
-				}
-				if (eur_ani.get(4) == 0) {
-					p2_2020eur.setText("-");
-				}
-				else {
-					p2_2020eur.setText(df2.format(eur_ani.get(4)) + " EUR");
-				}
-				if (eur_ani.get(5) == 0) {
-					p2_2021eur.setText("-");
-				}
-				else {
-					p2_2021eur.setText(df2.format(eur_ani.get(5)) + " EUR");
-				}
 			}
-
 			else if (e.getActionCommand() == second){
 				selectYear.setVisible(true);
 				p2l1.setVisible(true);
@@ -1551,230 +1441,6 @@ public class SPM_frame extends JFrame {
 				p2_octeur.setVisible(true);
 				p2_noveur.setVisible(true);
 				p2_deceur.setVisible(true);
-
-				// Calculus for quantities (BUC) by months
-
-				ArrayList<Integer> buc_luni = null;
-				Integer buc_an = 0;
-
-				ArrayList<String> luni = new ArrayList<>();
-				luni.add("ian");
-				luni.add("feb");
-				luni.add("mar");
-				luni.add("apr");
-				luni.add("mai");
-				luni.add("iun");
-				luni.add("iul");
-				luni.add("aug");
-				luni.add("sept");
-				luni.add("oct");
-				luni.add("nov");
-				luni.add("dec");
-
-				try {
-					buc_luni = SumMonth.sumQuantityMonth(p1l1.getText(), p2_an.getText(), luni);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if (buc_luni.get(0) == 0) {
-					p2_ianbuc.setText("-");
-				}
-				else {
-					buc_luni.get(0).toString();
-					p2_ianbuc.setText(String.format("%,d", buc_luni.get(0)));
-				}
-				if (buc_luni.get(1) == 0) {
-					p2_febbuc.setText("-");
-				}
-				else {
-					buc_luni.get(1).toString();
-					p2_febbuc.setText(String.format("%,d", buc_luni.get(1)));
-				}
-				if (buc_luni.get(2) == 0) {
-					p2_marbuc.setText("-");
-				}
-				else {
-					buc_luni.get(2).toString();
-					p2_marbuc.setText(String.format("%,d", buc_luni.get(2)));
-				}
-				if (buc_luni.get(3) == 0) {
-					p2_aprbuc.setText("-");
-				}
-				else {
-					buc_luni.get(3).toString();
-					p2_aprbuc.setText(String.format("%,d", buc_luni.get(3)));				
-				}
-				if (buc_luni.get(4) == 0) {
-					p2_maibuc.setText("-");
-				}
-				else {
-					buc_luni.get(4).toString();
-					p2_maibuc.setText(String.format("%,d", buc_luni.get(4)));
-				}
-				if (buc_luni.get(5) == 0) {
-					p2_iunbuc.setText("-");
-				}
-				else {
-					buc_luni.get(5).toString();
-					p2_iunbuc.setText(String.format("%,d", buc_luni.get(5)));
-				}
-				if (buc_luni.get(6) == 0) {
-					p2_iulbuc.setText("-");
-				}
-				else {
-					buc_luni.get(6).toString();
-					p2_iulbuc.setText(String.format("%,d", buc_luni.get(6)));
-				}
-				if (buc_luni.get(7) == 0) {
-					p2_augbuc.setText("-");
-				}
-				else {
-					buc_luni.get(7).toString();
-					p2_augbuc.setText(String.format("%,d", buc_luni.get(7)));
-				}
-				if (buc_luni.get(8) == 0) {
-					p2_septbuc.setText("-");
-				}
-				else {
-					buc_luni.get(8).toString();
-					p2_septbuc.setText(String.format("%,d", buc_luni.get(8)));
-				}
-				if (buc_luni.get(9) == 0) {
-					p2_octbuc.setText("-");
-				}
-				else {
-					buc_luni.get(9).toString();
-					p2_octbuc.setText(String.format("%,d", buc_luni.get(9)));
-				}
-				if (buc_luni.get(10) == 0) {
-					p2_novbuc.setText("-");
-				}
-				else {
-					buc_luni.get(10).toString();
-					p2_novbuc.setText(String.format("%,d", buc_luni.get(10)));
-				}
-				if (buc_luni.get(11) == 0) {
-					p2_decbuc.setText("-");
-				}
-				else {
-					buc_luni.get(11).toString();
-					p2_decbuc.setText(String.format("%,d", buc_luni.get(11)));
-				}
-
-				buc_an = buc_luni.get(0) + buc_luni.get(1) + buc_luni.get(2) + buc_luni.get(3) + buc_luni.get(4) + buc_luni.get(5) + buc_luni.get(6) + buc_luni.get(7)
-				+ buc_luni.get(8) + buc_luni.get(9) + buc_luni.get(10) + buc_luni.get(11);
-				if (buc_an == 0) {
-					p2_anbuc.setText("-");
-				}
-				else {
-					p2_anbuc.setText(String.format("%,d", buc_an));
-				}
-
-				// Calculus for values (EUR) by months
-
-				ArrayList<Double> eur_luni = null;
-				Double eur_an = 0.0;
-
-				try {
-					eur_luni = SumMonth.sumValueMonth(p1l1.getText(), p2_an.getText(), luni);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}					
-				if (eur_luni.get(0) == 0) {
-					p2_ianeur.setText("-");
-				}
-				else {
-					eur_luni.get(0).toString();
-					p2_ianeur.setText(df2.format(eur_luni.get(0)));
-				}
-				if (eur_luni.get(1) == 0) {
-					p2_febeur.setText("-");
-				}
-				else {
-					eur_luni.get(1).toString();
-					p2_febeur.setText(df2.format(eur_luni.get(1)));
-				}
-				if (eur_luni.get(2) == 0) {
-					p2_mareur.setText("-");
-				}
-				else {
-					eur_luni.get(2).toString();
-					p2_mareur.setText(df2.format(eur_luni.get(2)));
-				}
-				if (eur_luni.get(3) == 0) {
-					p2_apreur.setText("-");
-				}
-				else {
-					eur_luni.get(3).toString();
-					p2_apreur.setText(df2.format(eur_luni.get(3)));				
-				}
-				if (eur_luni.get(4) == 0) {
-					p2_maieur.setText("-");
-				}
-				else {
-					eur_luni.get(4).toString();
-					p2_maieur.setText(df2.format(eur_luni.get(4)));
-				}
-				if (eur_luni.get(5) == 0) {
-					p2_iuneur.setText("-");
-				}
-				else {
-					eur_luni.get(5).toString();
-					p2_iuneur.setText(df2.format(eur_luni.get(5)));
-				}
-				if (eur_luni.get(6) == 0) {
-					p2_iuleur.setText("-");
-				}
-				else {
-					eur_luni.get(6).toString();
-					p2_iuleur.setText(df2.format(eur_luni.get(6)));
-				}
-				if (eur_luni.get(7) == 0) {
-					p2_augeur.setText("-");
-				}
-				else {
-					eur_luni.get(7).toString();
-					p2_augeur.setText(df2.format(eur_luni.get(7)));
-				}
-				if (eur_luni.get(8) == 0) {
-					p2_septeur.setText("-");
-				}
-				else {
-					eur_luni.get(8).toString();
-					p2_septeur.setText(df2.format(eur_luni.get(8)));
-				}
-				if (eur_luni.get(9) == 0) {
-					p2_octeur.setText("-");
-				}
-				else {
-					eur_luni.get(9).toString();
-					p2_octeur.setText(df2.format(eur_luni.get(9)));
-				}
-				if (eur_luni.get(10) == 0) {
-					p2_noveur.setText("-");
-				}
-				else {
-					eur_luni.get(10).toString();
-					p2_noveur.setText(df2.format(eur_luni.get(10)));
-				}
-				if (eur_luni.get(11) == 0) {
-					p2_deceur.setText("-");
-				}
-				else {
-					eur_luni.get(11).toString();
-					p2_deceur.setText(df2.format(eur_luni.get(11)));
-				}
-				
-				eur_an = eur_luni.get(0) + eur_luni.get(1) + eur_luni.get(2) + eur_luni.get(3) + eur_luni.get(4) + eur_luni.get(5) + eur_luni.get(6) + eur_luni.get(7)
-				+ eur_luni.get(8) + eur_luni.get(9) + eur_luni.get(10) + eur_luni.get(11);
-				if (eur_an == 0) {
-					p2_aneur.setText("-");
-				}
-				else {
-					p2_aneur.setText(df2.format(eur_an));				
-				}				
 			}
 		}
 	}

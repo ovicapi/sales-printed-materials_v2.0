@@ -27,7 +27,7 @@ public class SPM_main {
 		frameLogo.setUndecorated(true);
 		frameLogo.setVisible(true);
 		
-		int delay = 3000; // Delay in milliseconds
+		int delay = 2000; // Delay in milliseconds
 
 		sD = ImportExcel.getExcel("resources/Date_SPM.xlsx", "Date");
 		sheet_date = ImportExcel.ArrayListTo2Darray(sD, sD_colNum);

@@ -125,7 +125,7 @@ public class SPM_frame extends JFrame {
 		topPanel = new JPanel();											// Construct the topPanel that will hold the selection area
 		topPanel.setLayout(null);
 
-		JLabel p1l1 = new JLabel("");										// Construct a label to catch the selected product
+		p1l1 = new JLabel("");										// Construct a label to catch the selected product
 		p1l1.setPreferredSize(new Dimension(1120, 40));
 		Dimension size1 = p1l1.getPreferredSize();
 		p1l1.setBounds(20, 55, size1.width, size1.height);

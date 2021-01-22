@@ -36,13 +36,12 @@ public class ImportExcel {
 					dataTable.add(c.getStringCellValue());
 				}
 			}
-			myExcel.close();
+			myWorkBook.close();
 		} 
 		catch (IOException e) {
 			System.out.println("ERROR FILE HANDLING " + e.toString());
 		}
 		return dataTable;
-		
 	}
 	
 	public static int getRowNumber() {

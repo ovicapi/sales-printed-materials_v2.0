@@ -29,11 +29,11 @@ public class SPM_main {
 		
 		int delay = 2000; // Delay in milliseconds
 
-		sD = ImportExcel.getExcel("resources/Date_SPM.xlsx", "Date");
+		sD = ImportExcel.getExcel("resources/Date_SPM.xlsm", "Date");
 		sheet_date = ImportExcel.ArrayListTo2Darray(sD, sD_colNum);
-		aD = ImportExcel.getExcel("resources/Date_SPM.xlsx", "Denumiri");
+		aD = ImportExcel.getExcel("resources/Date_SPM.xlsm", "Denumiri");
 		array_denumiri = ImportExcel.ArrayListTo2Darray(aD, aD_colNum);
-		pN = ImportExcel.getExcel("resources/Date_SPM.xlsx", "ListaProduse");
+		pN = ImportExcel.getExcel("resources/Date_SPM.xlsm", "ListaProduse");
 		productNames = ImportExcel.ArrayListTo2Darray(pN, pN_colNum);
 		
 		Thread.sleep(delay);

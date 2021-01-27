@@ -111,8 +111,8 @@ public class SPM_frame extends JFrame {
 	public static ArrayList<Double> eur_ani;
 	public DefaultCategoryDataset dataset;
 	
-	ChartPanel chartPanel = null;
-
+	ChartPanel chartPanel;
+	
 	public SPM_frame() throws InvalidFormatException, FileNotFoundException {
 
 		setTitle("Sales of Printed Materials");
@@ -133,6 +133,11 @@ public class SPM_frame extends JFrame {
 		topPanel = new JPanel();											// Construct the topPanel that will hold the selection area
 		topPanel.setLayout(null);
 
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout((LayoutManager) new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+		bottomPanel.setBackground(new Color(224, 224, 224));
+		bottomPanel.setLayout(null);
+		
 		p1l1 = new JLabel("");										// Construct a label to catch the selected product
 		p1l1.setPreferredSize(new Dimension(1120, 40));
 		Dimension size1 = p1l1.getPreferredSize();
@@ -803,17 +808,14 @@ public class SPM_frame extends JFrame {
 
 				    JFreeChart barChart = GraphYear.runGraph("SPM", "Ani", "Valoare", dataset);
 			    
-				    chartPanel = new ChartPanel(barChart); 
+//				    chartPanel = new ChartPanel(barChart); 
 				    chartPanel.setBounds(200, 150, 1150, 450);
 				    chartPanel.setVisible(true);
 //				    chartPanel.revalidate();
-//				    chartPanel.setChart(barChart);
+				    chartPanel.setChart(barChart);
 //				    chartPanel.repaint();
-				    bottomPanel.add(chartPanel);
-				    
+//				    bottomPanel.add(chartPanel);
 				}
-
-			
 			}
 		});
 
@@ -831,10 +833,7 @@ public class SPM_frame extends JFrame {
 
 		//Create a panel for the bottom of the frame. This panel will hold the informations by months and respectively by years of the products
 
-		bottomPanel = new JPanel();
-		bottomPanel.setLayout((LayoutManager) new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-		bottomPanel.setBackground(new Color(224, 224, 224));
-		bottomPanel.setLayout(null);
+
 
 		Font rowTitleFont = new Font("Verdana", Font.BOLD, 14);
 		Dimension rowTitleDimension = new Dimension(80,30);
@@ -1299,41 +1298,42 @@ public class SPM_frame extends JFrame {
 		p2_deceur.setForeground(Color.BLACK);	
 		p2_deceur.setVisible(false);
 		
-
+/*
 		dataset = new DefaultCategoryDataset();
-/*		
+		
 		if(buc_ani != null) {
 		
 			String series1 = "Vanzari (BUC)";
 			
-			dataset.addValue(buc_ani.get(0), series1, "2016");
-			dataset.addValue(buc_ani.get(1), series1, "2017");
-			dataset.addValue(buc_ani.get(2), series1, "2018");
-			dataset.addValue(buc_ani.get(3), series1, "2019");
-			dataset.addValue(buc_ani.get(4), series1, "2020");
-			dataset.addValue(buc_ani.get(5), series1, "2021");
+			dataset.addValue(100, series1, "2016");
+			dataset.addValue(200, series1, "2017");
+			dataset.addValue(300, series1, "2018");
+			dataset.addValue(400, series1, "2019");
+			dataset.addValue(500, series1, "2020");
+			dataset.addValue(600, series1, "2021");
 	    				
 			// Second series - value - for render as line
 			String series2 = "Venituri (EUR)";
 
-	    	dataset.addValue(eur_ani.get(0), series2, "2016");
-	    	dataset.addValue(eur_ani.get(1), series2, "2017");
-	    	dataset.addValue(eur_ani.get(2), series2, "2018");
-	    	dataset.addValue(eur_ani.get(3), series2, "2019");
-	    	dataset.addValue(eur_ani.get(4), series2, "2020");
-	    	dataset.addValue(eur_ani.get(5), series2, "2021");
-		}
+	    	dataset.addValue(1100, series2, "2016");
+	    	dataset.addValue(2200, series2, "2017");
+	    	dataset.addValue(3300, series2, "2018");
+	    	dataset.addValue(4400, series2, "2019");
+	    	dataset.addValue(5500, series2, "2020");
+	    	dataset.addValue(6600, series2, "2021");
+//		}
 		
 			JFreeChart barChart = GraphYear.runGraph("SPM", "Ani", "Valoare", dataset);
-		    
-			ChartPanel chartPanel = new ChartPanel(null); 
+*/		    
+			chartPanel = new ChartPanel(null); 
 		    chartPanel.setBounds(200, 150, 1150, 450);
+		    chartPanel.setBackground(new Color(224, 224, 224));
 		    chartPanel.setVisible(true);
-		    chartPanel.removeAll();
-		    chartPanel.revalidate();
-		    chartPanel.setChart(barChart);
-		    chartPanel.repaint();
-*/		
+//		    chartPanel.removeAll();
+//		    chartPanel.revalidate();
+//		    chartPanel.setChart(barChart);
+//		    chartPanel.repaint();
+		
 		
 		
 		//Add labels to bottomPanel
@@ -1398,6 +1398,7 @@ public class SPM_frame extends JFrame {
 		bottomPanel.add(p2_octeur);
 		bottomPanel.add(p2_noveur);
 		bottomPanel.add(p2_deceur);
+		bottomPanel.add(chartPanel);
 		
 		
 
@@ -1477,6 +1478,7 @@ public class SPM_frame extends JFrame {
 				p2_octeur.setVisible(false);
 				p2_noveur.setVisible(false);
 				p2_deceur.setVisible(false);
+				chartPanel.setVisible(true);
 			}
 			else if (e.getActionCommand() == second){
 				selectYear.setVisible(true);
@@ -1538,6 +1540,7 @@ public class SPM_frame extends JFrame {
 				p2_octeur.setVisible(true);
 				p2_noveur.setVisible(true);
 				p2_deceur.setVisible(true);
+				chartPanel.setVisible(false);
 			}
 		}
 	}

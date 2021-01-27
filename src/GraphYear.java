@@ -20,11 +20,11 @@ public class GraphYear {
                 yLabel,            
                 dataset,          
                 PlotOrientation.VERTICAL,           
-                true, false, false);
+                true, true, false);
         final CategoryPlot plot = barChart.getCategoryPlot();
-        plot.setBackgroundPaint(new Color(240, 240, 240));
-        plot.setDomainGridlinePaint(Color.WHITE);
-        plot.setRangeGridlinePaint(Color.WHITE);
+        plot.setBackgroundPaint(new Color(224, 224, 224));
+        plot.setDomainGridlinePaint(new Color(224, 224, 224));
+        plot.setRangeGridlinePaint(new Color(224, 224, 224));
 
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 		rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());

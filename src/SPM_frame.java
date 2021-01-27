@@ -20,10 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class SPM_frame extends JFrame {
@@ -86,7 +86,6 @@ public class SPM_frame extends JFrame {
 	private JLabel p2_octbuc;
 	private JLabel p2_novbuc;
 	private JLabel p2_decbuc;
-
 	private JLabel p2_aneur;
 	private JLabel p2_ianeur;
 	private JLabel p2_febeur;
@@ -100,8 +99,7 @@ public class SPM_frame extends JFrame {
 	private JLabel p2_octeur;
 	private JLabel p2_noveur;
 	private JLabel p2_deceur;
-	private ChartPanel cpanel;
-	
+		
 	private JComboBox<String> selectProduct;
 
 	static String first = new String("Raport pe ani");
@@ -111,6 +109,9 @@ public class SPM_frame extends JFrame {
 	
 	public static ArrayList<Integer> buc_ani;
 	public static ArrayList<Double> eur_ani;
+	public DefaultCategoryDataset dataset;
+	
+	ChartPanel chartPanel = null;
 
 	public SPM_frame() throws InvalidFormatException, FileNotFoundException {
 
@@ -441,6 +442,8 @@ public class SPM_frame extends JFrame {
 
 		//Construct a JComboBox named "selectProduct", to select an item and view information about this item
 
+		
+		
 		selectProduct = new JComboBox<>(Products.products());
 		selectProduct.setBounds(20,10,400,25);
 		selectProduct.setPreferredSize(new Dimension(400, 25));
@@ -451,7 +454,7 @@ public class SPM_frame extends JFrame {
 		selectProduct.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				p1l1.setText((String) e.getItem());
-
+				
 				ArrayList<String> ani = new ArrayList<String>();	//Construct an array list of string containing years
 				ani.add("2016");
 				ani.add("2017");
@@ -462,7 +465,7 @@ public class SPM_frame extends JFrame {
 
 				// Calculus for quantities (BUC) by years
 
-				buc_ani = null;
+//				buc_ani = null;
 
 				try {
 					buc_ani = SumYear.sumQuantityYear((String)e.getItem(), ani);
@@ -770,40 +773,47 @@ public class SPM_frame extends JFrame {
 						p2_aneur.setText(df2.format(eur_an));				
 					}
 				}
-			
-//___________________				
-				// First series - quantity - for render as bar
-			    String series1 = "Vanzari (BUC)";
-			    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-			    
-			    if(buc_ani != null) {
-			    
-			    dataset.addValue(buc_ani.get(0), series1, "2016");
-			    dataset.addValue(buc_ani.get(1), series1, "2017");
-			    dataset.addValue(buc_ani.get(2), series1, "2018");
-			    dataset.addValue(buc_ani.get(3), series1, "2019");
-			    dataset.addValue(buc_ani.get(4), series1, "2020");
-			    dataset.addValue(buc_ani.get(5), series1, "2021");
 				
-			    // Second series - value - for render as line
-			    String series2 = "Venituri (EUR)";
+				//Create dataset to use in chart render
+				
+				dataset = new DefaultCategoryDataset();
+				
+				if(e.getStateChange() == ItemEvent.SELECTED && buc_ani != null) {
 
-			    dataset.addValue(eur_ani.get(0), series2, "2016");
-			    dataset.addValue(eur_ani.get(1), series2, "2017");
-			    dataset.addValue(eur_ani.get(2), series2, "2018");
-			    dataset.addValue(eur_ani.get(3), series2, "2019");
-			    dataset.addValue(eur_ani.get(4), series2, "2020");
-			    dataset.addValue(eur_ani.get(5), series2, "2021");
+					System.out.println(buc_ani);
+					// First series - quantity - for render first series of data
+					String series1 = "Vanzari (BUC)";
+					
+				    dataset.addValue(buc_ani.get(0), series1, "2016");
+				    dataset.addValue(buc_ani.get(1), series1, "2017");
+				    dataset.addValue(buc_ani.get(2), series1, "2018");
+				    dataset.addValue(buc_ani.get(3), series1, "2019");
+				    dataset.addValue(buc_ani.get(4), series1, "2020");
+				    dataset.addValue(buc_ani.get(5), series1, "2021");
+				    				
+				    // Second series - value - for render second series of data
+				    String series2 = "Venituri (EUR)";
 
-			    }
-			   	    
-			    cpanel = new ChartPanel(GraphYear.chart(dataset));
-			    cpanel.setBounds(200, 150, 1150, 450);
-			    cpanel.setMaximumDrawHeight(24000);
-			    cpanel.setVisible(true);
-			    bottomPanel.add(cpanel);
+				    dataset.addValue(eur_ani.get(0), series2, "2016");
+				    dataset.addValue(eur_ani.get(1), series2, "2017");
+				    dataset.addValue(eur_ani.get(2), series2, "2018");
+				    dataset.addValue(eur_ani.get(3), series2, "2019");
+				    dataset.addValue(eur_ani.get(4), series2, "2020");
+				    dataset.addValue(eur_ani.get(5), series2, "2021");
+
+				    JFreeChart barChart = GraphYear.runGraph("SPM", "Ani", "Valoare", dataset);
+			    
+				    chartPanel = new ChartPanel(barChart); 
+				    chartPanel.setBounds(200, 150, 1150, 450);
+				    chartPanel.setVisible(true);
+//				    chartPanel.revalidate();
+//				    chartPanel.setChart(barChart);
+//				    chartPanel.repaint();
+				    bottomPanel.add(chartPanel);
+				    
+				}
+
 			
-//_______________			
 			}
 		});
 
@@ -1289,6 +1299,43 @@ public class SPM_frame extends JFrame {
 		p2_deceur.setForeground(Color.BLACK);	
 		p2_deceur.setVisible(false);
 		
+
+		dataset = new DefaultCategoryDataset();
+/*		
+		if(buc_ani != null) {
+		
+			String series1 = "Vanzari (BUC)";
+			
+			dataset.addValue(buc_ani.get(0), series1, "2016");
+			dataset.addValue(buc_ani.get(1), series1, "2017");
+			dataset.addValue(buc_ani.get(2), series1, "2018");
+			dataset.addValue(buc_ani.get(3), series1, "2019");
+			dataset.addValue(buc_ani.get(4), series1, "2020");
+			dataset.addValue(buc_ani.get(5), series1, "2021");
+	    				
+			// Second series - value - for render as line
+			String series2 = "Venituri (EUR)";
+
+	    	dataset.addValue(eur_ani.get(0), series2, "2016");
+	    	dataset.addValue(eur_ani.get(1), series2, "2017");
+	    	dataset.addValue(eur_ani.get(2), series2, "2018");
+	    	dataset.addValue(eur_ani.get(3), series2, "2019");
+	    	dataset.addValue(eur_ani.get(4), series2, "2020");
+	    	dataset.addValue(eur_ani.get(5), series2, "2021");
+		}
+		
+			JFreeChart barChart = GraphYear.runGraph("SPM", "Ani", "Valoare", dataset);
+		    
+			ChartPanel chartPanel = new ChartPanel(null); 
+		    chartPanel.setBounds(200, 150, 1150, 450);
+		    chartPanel.setVisible(true);
+		    chartPanel.removeAll();
+		    chartPanel.revalidate();
+		    chartPanel.setChart(barChart);
+		    chartPanel.repaint();
+*/		
+		
+		
 		//Add labels to bottomPanel
 
 		bottomPanel.add(p2_buc);
@@ -1351,13 +1398,20 @@ public class SPM_frame extends JFrame {
 		bottomPanel.add(p2_octeur);
 		bottomPanel.add(p2_noveur);
 		bottomPanel.add(p2_deceur);
-//		bottomPanel.add(cpanel);
+		
+		
 
 		// Add the bottomPanel to the splitPane
 
 		splitPane.add(bottomPanel);
 
 		pack();
+	}
+	public ArrayList<Integer> getBuc_ani() {
+		return buc_ani;
+	}
+	public ArrayList<Double> getEur_ani() {
+		return eur_ani;
 	}
 	
 	class RadioListener implements ActionListener { 
@@ -1487,5 +1541,5 @@ public class SPM_frame extends JFrame {
 			}
 		}
 	}
-}
+	}
 

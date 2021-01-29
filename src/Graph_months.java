@@ -4,14 +4,13 @@ import java.awt.GradientPaint;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 	
-public class GraphYear {
+public class Graph_months {
 
 	public static JFreeChart runGraph(String chartTitle, String xLabel, String yLabel, DefaultCategoryDataset dataset) {
         JFreeChart barChart = ChartFactory.createBarChart(
@@ -31,15 +30,20 @@ public class GraphYear {
 
 		final BarRenderer renderer = (BarRenderer) plot.getRenderer();
 		renderer.setDrawBarOutline(false);
+		renderer.setItemMargin(0.0);
 		
 		final GradientPaint gp0 = new GradientPaint(0.0f, 0.0f, Color.blue, 0.0f, 0.0f, Color.lightGray);
 		final GradientPaint gp1 = new GradientPaint(0.0f, 0.0f, Color.red, 0.0f, 0.0f, Color.lightGray);
 		renderer.setSeriesPaint(0, gp0);
 		renderer.setSeriesPaint(1, gp1);
+		renderer.setMaximumBarWidth(0.32);
+		renderer.setMinimumBarLength(0.8);
 
 		final CategoryAxis domainAxis = plot.getDomainAxis();
-		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0));
-        
+        domainAxis.setLowerMargin(0.01);
+        domainAxis.setCategoryMargin(0.1);
+        domainAxis.setUpperMargin(0.01);
+		
         return barChart;
     }
 		

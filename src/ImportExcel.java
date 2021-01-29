@@ -24,9 +24,9 @@ public class ImportExcel {
 		try {
 			InputStream myExcel = new FileInputStream(file);
 			Workbook myWorkBook = StreamingReader.builder()
-					.rowCacheSize(100)    // number of rows to keep in memory (defaults to 10)
-					.bufferSize(4096)     // buffer size to use when reading InputStream to file (defaults to 1024)
-					.open(myExcel);            // InputStream or File for XLSX file (required)
+					.rowCacheSize(100)    					// number of rows to keep in memory (defaults to 10)
+					.bufferSize(4096)     					// buffer size to use when reading InputStream to file (defaults to 1024)
+					.open(myExcel);            				// InputStream or File for XLSX file (required)
 			Sheet xlSheet = myWorkBook.getSheet(sheetname);	
 			
 			rowNumber = xlSheet.getLastRowNum() + 1;

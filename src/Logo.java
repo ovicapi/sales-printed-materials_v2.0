@@ -39,7 +39,7 @@ public class Logo extends JFrame {
 
 		
 		JLabel by = new JLabel();
-		by.setText("<html><div style='text-align: center;'>by Capitanu</div></html>");
+		by.setText("<html><div style='text-align: center;'>by ovicapi</div></html>");
 		by.setPreferredSize(new Dimension(200, 50));
 		Dimension size1 = by.getPreferredSize();
 		by.setBounds(410, 160, size1.width, size1.height);

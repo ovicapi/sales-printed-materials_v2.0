@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -11,6 +13,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 	
 public class Graph_months {
+	public static DefaultCategoryDataset dataset_months;
 
 	public static JFreeChart runGraph(String chartTitle, String xLabel, String yLabel, DefaultCategoryDataset dataset) {
         JFreeChart barChart = ChartFactory.createBarChart(
@@ -46,5 +49,28 @@ public class Graph_months {
 		
         return barChart;
     }
-		
+	
+	public static DefaultCategoryDataset CreateDatasetMonths (ArrayList<Integer> buc_luni, ArrayList<Double> eur_luni, String series1, String series2, String text_product, String text_year) throws FileNotFoundException {
+		dataset_months = new DefaultCategoryDataset();
+		ArrayList<String> luni = new ArrayList<String>();	//Construct an array list of string containing months
+		luni.add("ian");
+		luni.add("feb");
+		luni.add("mar");
+		luni.add("apr");
+		luni.add("mai");
+		luni.add("iun");
+		luni.add("iul");
+		luni.add("aug");
+		luni.add("sept");
+		luni.add("oct");
+		luni.add("nov");
+		luni.add("dec");
+		for (int i = 0; i < luni.size(); i++) {
+			dataset_months.addValue(buc_luni.get(i), series1, luni.get(i));
+		}
+		for (int i = luni.size(); i < luni.size() * 2; i++) {
+			dataset_months.addValue(eur_luni.get(i-luni.size()), series2, luni.get(i - luni.size()));
+		}
+		return dataset_months;
+	}
 }

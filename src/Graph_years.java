@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -11,6 +13,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 	
 public class Graph_years {
+	public static DefaultCategoryDataset dataset_years;
 
 	public static JFreeChart runGraph(String chartTitle, String xLabel, String yLabel, DefaultCategoryDataset dataset) {
         JFreeChart barChart = ChartFactory.createBarChart(
@@ -45,5 +48,21 @@ public class Graph_years {
 		
         return barChart;
     }
-		
+	public static DefaultCategoryDataset CreateDatasetYears (ArrayList<Integer> buc_ani, ArrayList<Double> eur_ani, String series1, String series2, String text_product, String text_year) throws FileNotFoundException {
+		dataset_years = new DefaultCategoryDataset();
+		ArrayList<String> ani = new ArrayList<String>();		//Construct an array list of string containing years
+		ani.add("2016");
+		ani.add("2017");
+		ani.add("2018");
+		ani.add("2019");
+		ani.add("2020");
+		ani.add("2021");
+		for (int i = 0; i < ani.size(); i++) {
+			dataset_years.addValue(buc_ani.get(i), series1, ani.get(i));
+		}
+		for (int i = ani.size(); i < ani.size() * 2; i++) {
+			dataset_years.addValue(eur_ani.get(i - ani.size()), series2, ani.get(i - ani.size()));
+		}
+		return dataset_years;
+	}	
 }

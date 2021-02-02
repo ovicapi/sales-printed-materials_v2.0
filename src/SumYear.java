@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class SumYear {
 
-		public static ArrayList<Integer> sumQuantityYear (String produs, ArrayList<String> ani) throws FileNotFoundException {
+	public static ArrayList<Integer> sumQuantityYear (String produs, ArrayList<String> ani) throws FileNotFoundException {
 
 		// Construiesc un ArrayList de dimensiune egala cu numarul de ani, si stochez in fiecare element cantitatea vanzarilor produsului pentru fiecare an
 
@@ -37,7 +37,7 @@ public class SumYear {
 		}
 		return sumQuantityYear;
 	}
-	
+
 	public static ArrayList<Double> sumValueYear (String produs, ArrayList<String> ani) throws FileNotFoundException {
 
 		// Construiesc un ArrayList de dimensiune egala cu numarul de ani, si stochez in fiecare element valoarea vanzarilor produsului pentru fiecare an
@@ -56,7 +56,7 @@ public class SumYear {
 							for (int k = 0; k < ani.size(); k++) {
 								if (cell_an.equals(ani.get(k))) {
 									if (SPM_main.sheet_date[i][4] != null && !SPM_main.sheet_date[i][4].equals("")) {
-											sumValueYear.set(k, sumValueYear.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
+										sumValueYear.set(k, sumValueYear.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
 									}
 								}
 							}

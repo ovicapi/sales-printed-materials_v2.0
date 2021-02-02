@@ -66,10 +66,10 @@ public class SPM_frame extends JFrame {
 	private static Dimension bottomYearsValueDimension;
 	private static Dimension bottomMonthsQuantityDimension;
 	private static Dimension bottomMonthsValueDimension;
-	
+
 	private static ArrayList<String> bottomMonthsTitleText;
 	private static ArrayList<String> bottomYearsTitleText;
-	
+
 	private static JLabel[] bottomCategoryLabels;
 	private static JLabel[] bottomLabelsMonthsTitle;
 	private static JLabel[] bottomLabelsYearsTitle;
@@ -77,18 +77,18 @@ public class SPM_frame extends JFrame {
 	private static JLabel[] bottomLabelsYearsValue;
 	private static JLabel[] bottomLabelsMonthsQuantity;
 	private static JLabel[] bottomLabelsMonthsValue;
-	
+
 	public static ArrayList<Integer> buc_ani;
 	public static ArrayList<Integer> buc_luni;
 	public static ArrayList<Double> eur_ani;
 	public static ArrayList<Double> eur_luni;
-	
+
 	public DefaultCategoryDataset dataset_years;
 	public DefaultCategoryDataset dataset_months;
 
 	private ChartPanel chartPanel_years;
 	private ChartPanel chartPanel_months;
-	
+
 	public SPM_frame() throws InvalidFormatException, FileNotFoundException {
 
 		setTitle("Sales of Printed Materials");
@@ -204,8 +204,8 @@ public class SPM_frame extends JFrame {
 							p2_anbuc.setText(String.format("%,d", buc_an));
 						}
 
-					// Calculus for values (EUR) by months	
-						
+						// Calculus for values (EUR) by months	
+
 						Double eur_an = 0.0;
 
 						Utilities.CalculateValueMonth(p1l1.getText(), p2_an.getText(), bottomLabelsMonthsValue);
@@ -227,8 +227,8 @@ public class SPM_frame extends JFrame {
 					}
 
 					//Create Months chart
-						
-					if(e_selectYear.getStateChange() == ItemEvent.SELECTED && buc_luni != null && eur_luni != null && year == false) {
+
+					if(e_selectYear.getStateChange() == ItemEvent.SELECTED && buc_luni != null && eur_luni != null) {
 						try {
 							dataset_months = Graph_months.CreateDatasetMonths(buc_luni, eur_luni, "Vanzari (BUC)", "Venituri (EUR)", p1l1.getText(), p2_an.getText());
 						} catch (FileNotFoundException e) {
@@ -237,7 +237,6 @@ public class SPM_frame extends JFrame {
 						}
 						JFreeChart barChart_months = Graph_months.runGraph("", "Luni", "Valoare", dataset_months);
 						chartPanel_months.setBounds(200, 150, 1320, 450);
-						chartPanel_months.setVisible(true);
 						chartPanel_months.setChart(barChart_months);
 					}				
 				}
@@ -260,7 +259,7 @@ public class SPM_frame extends JFrame {
 				ani.add("2019");
 				ani.add("2020");
 				ani.add("2021");
-				
+
 				if (p1l1.getText().equals("Alegeti un produs")) {
 					for (int i = 0; i < bottomLabelsYearsQuantity.length; i++) {
 						bottomLabelsYearsQuantity[i].setText(null);
@@ -280,11 +279,11 @@ public class SPM_frame extends JFrame {
 						e.printStackTrace();
 					}						
 				}
-				
+
 				//Create Years chart
-				
+
 				if (e_selectProduct.getStateChange() == ItemEvent.SELECTED && Utilities.CalculateQuantityYear(p1l1.getText(), bottomLabelsYearsQuantity) != null 
-						&& Utilities.CalculateValueYear(p1l1.getText(), bottomLabelsYearsValue) != null && year == true) {	
+						&& Utilities.CalculateValueYear(p1l1.getText(), bottomLabelsYearsValue) != null) {	
 
 					try {
 						dataset_years = Graph_years.CreateDatasetYears(buc_ani, eur_ani, "Vanzari (BUC)", "Venituri (EUR)", p1l1.getText(), p2_an.getText());
@@ -293,13 +292,12 @@ public class SPM_frame extends JFrame {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 					JFreeChart barChart = Graph_years.runGraph("", "Ani", "Valoare", dataset_years);
 					chartPanel_years.setBounds(100, 150, 1250, 450);
-					chartPanel_years.setVisible(true);
 					chartPanel_years.setChart(barChart);
 				}
-				
+
 				// Calculus for quantities (BUC) by months
 
 				Integer buc_an = 0;
@@ -321,11 +319,11 @@ public class SPM_frame extends JFrame {
 					else {
 						p2_anbuc.setText(String.format("%,d", buc_an));
 					}
-					
+
 					// Calculus for values (EUR) by months
 
 					Double eur_an = 0.0;
-					
+
 					Utilities.CalculateValueMonth(p1l1.getText(), p2_an.getText(), bottomLabelsMonthsValue);
 					try {
 						eur_luni = SumMonth.sumValueMonth(p1l1.getText(), p2_an.getText(), luni);
@@ -346,7 +344,7 @@ public class SPM_frame extends JFrame {
 
 				//Create Months chart
 
-				if (buc_luni != null && eur_luni != null && year == false) {
+				if (buc_luni != null && eur_luni != null) {
 					try {
 						dataset_months = Graph_months.CreateDatasetMonths(buc_luni, eur_luni, "Vanzari (BUC)", "Venituri (EUR)", p1l1.getText(), p2_an.getText());
 					} catch (FileNotFoundException e) {
@@ -355,13 +353,12 @@ public class SPM_frame extends JFrame {
 					}	
 					JFreeChart barChart_months = Graph_months.runGraph("", "Luni", "Valoare", dataset_months);
 					chartPanel_months.setBounds(200, 150, 1320, 450);
-					chartPanel_months.setVisible(true);
 					chartPanel_months.setChart(barChart_months);
 				}		
 			}
 		});
 
-		//Add the label and the comboBox to the topPanel
+		//Add labels and the comboBox to the topPanel
 
 		topPanel.add(selectProduct);
 		topPanel.add(p1l1);
@@ -369,22 +366,20 @@ public class SPM_frame extends JFrame {
 		topPanel.add(byMonths);
 		topPanel.add(selectYear);
 
-		//Add topPanel to the splitPane
-
 		splitPane.add(topPanel);
 
 		// Create Category labels for bottom panel
-		
-		ArrayList<String> bottomCategoryNames = new ArrayList<>();								// ArrayList with names for category labels (Vanzari (BUC), Venituri (EUR))
+
+		ArrayList<String> bottomCategoryNames = new ArrayList<>();				// ArrayList with names for category labels (Vanzari (BUC), Venituri (EUR))
 		Collections.addAll(bottomCategoryNames, "p2_buc", "p2_eur");
 		Dimension categoryLabelsDimension = new Dimension(120, 30);
 		ArrayList<String> text_CategoryLabel = new ArrayList<>();
 		text_CategoryLabel.add("Vanzari (BUC)");
 		text_CategoryLabel.add("Venituri (EUR)");
 		bottomCategoryLabels = Utilities.CreateCategoryLabels(bottomCategoryNames, categoryLabelsDimension, text_CategoryLabel);
-		
+
 		// Create Months Title labels for bottom panel
-		
+
 		bottomMonthsTitleNames = new ArrayList<>();								// ArrayList with names for Months Title labels )
 		Collections.addAll(bottomMonthsTitleNames, "p2l2", "p2l3", "p2l4", "p2l5", "p2l6", "p2l7", "p2l8", "p2l9", "p2l10", "p2l11", "p2l12", "p2l13");
 		bottomMonthsTitleDimension = new Dimension(80, 30);
@@ -393,49 +388,49 @@ public class SPM_frame extends JFrame {
 		bottomLabelsMonthsTitle = Utilities.CreateMonthsTitleLabels(bottomMonthsTitleNames, bottomMonthsTitleDimension, bottomMonthsTitleText);
 
 		//Create Years Title labels for bottom panel
-		
+
 		bottomYearsTitleNames = new ArrayList<>();								// ArrayList with names for Years Title labels )
 		Collections.addAll(bottomYearsTitleNames, "p2l14", "p2l15", "p2l16", "p2l17", "p2l18", "p2l19");
 		bottomYearsTitleDimension = new Dimension(150, 30);
 		bottomYearsTitleText = new ArrayList<>();
 		Collections.addAll(bottomYearsTitleText, "TOTAL an 2016", "TOTAL an 2017", "TOTAL an 2018", "TOTAL an 2019", "TOTAL an 2020", "TOTAL an 2021");
 		bottomLabelsYearsTitle = Utilities.CreateYearsTitleLabels(bottomYearsTitleNames, bottomYearsTitleDimension, bottomYearsTitleText);
-		
+
 		// Create Years Quantity labels for bottom panel
-		
-		bottomYearsQuantityNames = new ArrayList<>();								// ArrayList with names for Years Quantity labels )
+
+		bottomYearsQuantityNames = new ArrayList<>();							// ArrayList with names for Years Quantity labels )
 		Collections.addAll(bottomYearsQuantityNames, "p2_2016buc", "p2_2017buc", "p2_2018buc", "p2_2019buc", "p2_2020buc", "p2_2021buc");
 		bottomYearsQuantityDimension = new Dimension(150, 30);
 		bottomLabelsYearsQuantity = Utilities.CreateYearsQuantityLabels(bottomYearsQuantityNames, bottomYearsQuantityDimension);
 
 		// Create Years Values labels for bottom panel
-		
+
 		bottomYearsValueNames = new ArrayList<>();								// ArrayList with names for Years Value labels )
 		Collections.addAll(bottomYearsValueNames, "p2_2016eur", "p2_2017eur", "p2_2018eur", "p2_2019eur", "p2_2020eur", "p2_2021eur");
 		bottomYearsValueDimension = new Dimension(150, 30);
 		bottomLabelsYearsValue = Utilities.CreateYearsValueLabels(bottomYearsValueNames, bottomYearsValueDimension);
-		
+
 		// Create Months Quantity labels for bottom panel		
 
-		bottomMonthsQuantityNames = new ArrayList<>();								// ArrayList with names for Years Quantity labels )
+		bottomMonthsQuantityNames = new ArrayList<>();							// ArrayList with names for Years Quantity labels )
 		Collections.addAll(bottomMonthsQuantityNames, "p2_ianbuc", "p2_febbuc", "p2_marbuc", "p2_aprbuc", "p2_maibuc", "p2_iunbuc", "p2_iulbuc", "p2_augbuc",
 				"p2_septbuc", "p2_octbuc", "p2_novbuc", "p2_decbuc");
 		bottomMonthsQuantityDimension = new Dimension(80, 30);
 		bottomLabelsMonthsQuantity = Utilities.CreateMonthsQuantityLabels(bottomMonthsQuantityNames, bottomMonthsQuantityDimension);
-		
+
 		// Create Months Values labels for bottom panel
-		
+
 		bottomMonthsValueNames = new ArrayList<>();								// ArrayList with names for Years Quantity labels )
 		Collections.addAll(bottomMonthsValueNames, "p2_ianeur", "p2_febeur", "p2_mareur", "p2_apreur", "p2_maieur", "p2_iuneur", "p2_iuleur", "p2_augeur",
 				"p2_septeur", "p2_octeur", "p2_noveur", "p2_deceur");
 		bottomMonthsValueDimension = new Dimension(80, 30);
 		bottomLabelsMonthsValue = Utilities.CreateMonthsValueLabels(bottomMonthsValueNames, bottomMonthsValueDimension);
-		
+
 		Font rowTitleFont = new Font("Verdana", Font.BOLD, 14);
 		Dimension rowTitleDimension = new Dimension(80,30);
 
 		// Create Labels for years Title report in bottom panel
-		
+
 		p2l1 = new JLabel("TOTAL an");											// Column title "TOTAL an" for the report by months
 		p2l1.setPreferredSize(rowTitleDimension);
 		p2l1.setBounds(200, 10, 80, 30);
@@ -470,9 +465,9 @@ public class SPM_frame extends JFrame {
 
 		chartPanel_years = new ChartPanel(null);
 		chartPanel_months = new ChartPanel(null);
-		
+
 		//Add labels to bottomPanel
-		
+
 		Utilities.AddToPanel(bottomPanel, bottomCategoryLabels);
 		Utilities.AddToPanel(bottomPanel, bottomLabelsMonthsTitle);
 		Utilities.SetVisible(bottomLabelsMonthsTitle, false);
@@ -494,10 +489,9 @@ public class SPM_frame extends JFrame {
 		bottomPanel.add(chartPanel_months);
 
 		splitPane.add(bottomPanel);
-
 		pack();
 	}
-	
+
 	class RadioListener implements ActionListener { 
 
 		public void actionPerformed (ActionEvent e) {

@@ -56,7 +56,9 @@ public class SumYear {
 							for (int k = 0; k < ani.size(); k++) {
 								if (cell_an.equals(ani.get(k))) {
 									if (SPM_main.sheet_date[i][4] != null && !SPM_main.sheet_date[i][4].equals("")) {
-										sumValueYear.set(k, sumValueYear.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
+										if (SPM_main.sheet_date[i][1].contentEquals("70401100")) {
+											sumValueYear.set(k, sumValueYear.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
+										}
 									}
 								}
 							}

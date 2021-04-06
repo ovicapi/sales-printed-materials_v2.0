@@ -192,7 +192,6 @@ public class Utilities {
 				bottomLabelsYearsValue[i].setText("-");
 			}
 			else {
-				//				eur_ani.get(i).toString();
 				bottomLabelsYearsValue[i].setText(df2.format(eur_ani.get(i)));
 			}
 		}

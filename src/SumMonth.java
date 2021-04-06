@@ -50,7 +50,9 @@ public class SumMonth {
 									for (int k = 0; k < luni.size(); k++) {
 										if (cell_luna.equals(luni.get(k))) {
 											if (SPM_main.sheet_date[i][4] != null && !SPM_main.sheet_date[i][4].equals("")) {
-												sumValueMonth.set(k, sumValueMonth.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
+												if (SPM_main.sheet_date[i][1].contentEquals("70401100")) {
+													sumValueMonth.set(k, sumValueMonth.get(k) + Double.parseDouble(SPM_main.sheet_date[i][4]));
+												}
 											}
 										}
 									}
